@@ -7,10 +7,10 @@ import cmaps
 
 plio_file = 'pme_eplio.nc'
 glac_file = 'pme_glac.nc'
-dyn_pme_file = 'pme_diff_delu_glac.nc'
+dyn_pme_file = 'pme_uvq_eplio.nc'
 
-outfile_jja = 'pme_dynamic_jja.pdf'
-outfile_djf = 'pme_dynamic_djf.pdf'
+outfile_jja = 'pme_check_jja.pdf'
+outfile_djf = 'pme_check_djf.pdf'
 
 f = nc.Dataset(plio_file, 'r')
 evap_plio = f.variables['evap'][:] 
@@ -85,15 +85,15 @@ bmax = 10.
 bivl = 1.
 blevels = np.arange(bmin, bmax+bivl/2., bivl)
 
-fig = plt.figure(num=1, figsize=(10,6))
+fig = plt.figure(num=1, figsize=(6,8))
 
 
-ax1 = fig.add_subplot(2,2,1, projection=ccrs.PlateCarree())
+ax1 = fig.add_subplot(2,1,1, projection=ccrs.PlateCarree())
 
 # can also use cmap=cmaps.cmocean_balance
 # h1 = ax1.contourf(lon1, lat, pme_plio_jja, blevels, extend="both", cmap=cmaps.BlueWhiteOrangeRed)
 h1 = ax1.contourf(lon1, lat, pme_plio_jja, blevels, extend="both", cmap=cmaps.MPL_BrBG)
-cbar = plt.colorbar(h1, fraction=0.046, pad=0.04)
+cbar = plt.colorbar(h1, fraction=0.025, pad=0.04)
 ax1.set_title('Early Plio P-E JJA (mm/d)')
 ax1.coastlines()
 gl = ax1.gridlines(draw_labels=True, alpha=0.5, color='black', linewidth=0.5, linestyle='--')
@@ -101,36 +101,17 @@ gl.top_labels = False
 gl.right_labels = False
 
 
-ax1 = fig.add_subplot(2,2,2, projection=ccrs.PlateCarree())
+ax1 = fig.add_subplot(2,1,2, projection=ccrs.PlateCarree())
 
 # can also use cmap=cmaps.cmocean_balance
-h1 = ax1.contourf(lon1, lat, delta_held_jja, levels, extend="both", cmap=cmaps.MPL_BrBG)
-cbar = plt.colorbar(h1, fraction=0.046, pad=0.04)
-ax1.set_title('Held-Soden 06 $\Delta$(P-E) JJA (mm/d)')
+h1 = ax1.contourf(lon1, lat, pme_dyn_jja, blevels, extend="both", cmap=cmaps.MPL_BrBG)
+cbar = plt.colorbar(h1, fraction=0.025, pad=0.04)
+ax1.set_title('(P-E) from divergence JJA (mm/d)')
 ax1.coastlines()
 gl = ax1.gridlines(draw_labels=True, alpha=0.5, color='black', linewidth=0.5, linestyle='--')
 gl.top_labels = False
 gl.right_labels = False
 
-ax1 = fig.add_subplot(2,2,3, projection=ccrs.PlateCarree())
-
-h1 = ax1.contourf(lon1, lat, pme_dyn_jja, levels, extend="both", cmap=cmaps.MPL_BrBG)
-cbar = plt.colorbar(h1, fraction=0.046, pad=0.04)
-ax1.set_title('Dynamic $\Delta$(P-E) JJA (mm/d)')
-ax1.coastlines()
-gl = ax1.gridlines(draw_labels=True, alpha=0.5, color='black', linewidth=0.5, linestyle='--')
-gl.top_labels = False
-gl.right_labels = False
-
-
-ax2 = fig.add_subplot(2,2,4, projection=ccrs.PlateCarree())
-h2 = ax2.contourf(lon1, lat, delta_pme_jja, levels, extend="both", cmap=cmaps.MPL_BrBG)
-cbar = plt.colorbar(h2, fraction=0.046, pad=0.04)
-ax2.set_title('Total $\Delta$(P-E) JJA (mm/d)')
-ax2.coastlines()
-gl = ax2.gridlines(draw_labels=True, alpha=0.5, color='black', linewidth=0.5, linestyle='--')
-gl.top_labels = False
-gl.right_labels = False
 
 plt.savefig(outfile_jja)
 
@@ -143,13 +124,13 @@ plt.savefig(outfile_jja)
 
 
 
-fig = plt.figure(num=2, figsize=(10,6))
+fig = plt.figure(num=2, figsize=(6,8))
 
 
-ax1 = fig.add_subplot(2,2,1, projection=ccrs.PlateCarree())
+ax1 = fig.add_subplot(2,1,1, projection=ccrs.PlateCarree())
 
 h1 = ax1.contourf(lon1, lat, pme_plio_djf, blevels, extend="both", cmap=cmaps.MPL_BrBG)
-cbar = plt.colorbar(h1, fraction=0.046, pad=0.04)
+cbar = plt.colorbar(h1, fraction=0.025, pad=0.04)
 ax1.set_title('Early Plio P-E DJF (mm/d)')
 ax1.coastlines()
 gl = ax1.gridlines(draw_labels=True, alpha=0.5, color='black', linewidth=0.5, linestyle='--')
@@ -157,32 +138,13 @@ gl.top_labels = False
 gl.right_labels = False
 
 
-ax1 = fig.add_subplot(2,2,2, projection=ccrs.PlateCarree())
+ax1 = fig.add_subplot(2,1,2, projection=ccrs.PlateCarree())
 
-h1 = ax1.contourf(lon1, lat, delta_held_djf, levels, extend="both", cmap=cmaps.MPL_BrBG)
-cbar = plt.colorbar(h1, fraction=0.046, pad=0.04)
-ax1.set_title('Held-Soden 06 $\Delta$(P-E) DJF (mm/d)')
+h1 = ax1.contourf(lon1, lat, pme_dyn_jja, blevels, extend="both", cmap=cmaps.MPL_BrBG)
+cbar = plt.colorbar(h1, fraction=0.025, pad=0.04)
+ax1.set_title('(P-E) from divergence JJA (mm/d)')
 ax1.coastlines()
 gl = ax1.gridlines(draw_labels=True, alpha=0.5, color='black', linewidth=0.5, linestyle='--')
-gl.top_labels = False
-gl.right_labels = False
-
-ax1 = fig.add_subplot(2,2,3, projection=ccrs.PlateCarree())
-
-h1 = ax1.contourf(lon1, lat, pme_dyn_djf, levels, extend="both", cmap=cmaps.MPL_BrBG)
-cbar = plt.colorbar(h1, fraction=0.046, pad=0.04)
-ax1.set_title('Dynamic $\Delta$(P-E) DJF (mm/d)')
-ax1.coastlines()
-gl = ax1.gridlines(draw_labels=True, alpha=0.5, color='black', linewidth=0.5, linestyle='--')
-gl.top_labels = False
-gl.right_labels = False
-
-ax2 = fig.add_subplot(2,2,4, projection=ccrs.PlateCarree())
-h2 = ax2.contourf(lon1, lat, delta_pme_djf, levels, extend="both", cmap=cmaps.MPL_BrBG)
-cbar = plt.colorbar(h2, fraction=0.046, pad=0.04)
-ax2.set_title('Total $\Delta$(P-E) DJF (mm/d)')
-ax2.coastlines()
-gl = ax2.gridlines(draw_labels=True, alpha=0.5, color='black', linewidth=0.5, linestyle='--')
 gl.top_labels = False
 gl.right_labels = False
 
