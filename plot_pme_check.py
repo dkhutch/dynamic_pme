@@ -140,7 +140,7 @@ gl.right_labels = False
 
 ax1 = fig.add_subplot(2,1,2, projection=ccrs.PlateCarree())
 
-h1 = ax1.contourf(lon1, lat, pme_dyn_jja, blevels, extend="both", cmap=cmaps.MPL_BrBG)
+h1 = ax1.contourf(lon1, lat, pme_dyn_djf, blevels, extend="both", cmap=cmaps.MPL_BrBG)
 cbar = plt.colorbar(h1, fraction=0.025, pad=0.04)
 ax1.set_title('(P-E) from divergence JJA (mm/d)')
 ax1.coastlines()

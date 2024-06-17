@@ -56,7 +56,7 @@ pme_calc = (grad_x + grad_y) / grav
 
 f = nc.Dataset(args.output, 'w')
 f.history = f'pme_from_uvq.py {args.input} {args.output}'
-`
+
 f.createDimension('time', 0)
 f.createDimension('lat', nlat)
 f.createDimension('lon', nlon)
