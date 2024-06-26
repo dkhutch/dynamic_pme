@@ -129,6 +129,10 @@ f.createDimension('time', 0)
 f.createDimension('lat', nlat)
 f.createDimension('lon', nlon)
 
+time_o = f.createVariable('time', 'f8', ('time'))
+time_o.units = 'months'
+time_o[:] = np.arange(1,13)
+
 lat_o = f.createVariable('lat', 'f8', ('lat'))
 lat_o.units = 'degrees_north'
 lat_o[:] = lat[:]
